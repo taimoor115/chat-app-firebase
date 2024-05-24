@@ -3,7 +3,8 @@ import Signup from "./components/Signup";
 import Login from "./components/Login";
 
 const App = () => {
-  return <Login />;
-};
+  // const [register, SetRegister] = useState(false);
 
+  return <Signup />;
+};
 export default App;

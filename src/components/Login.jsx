@@ -1,4 +1,14 @@
 import Input from "./Input";
+import app from "../firebase";
+import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider(auth);
+
+const signInWithGoogle = () => {
+  signInWithPopup(auth, provider);
+  console.log(user);
+};
 const Login = () => {
   return (
     <div className="flex justify-center mt-10">
@@ -40,6 +50,7 @@ const Login = () => {
         </div>
         <div className="flex justify-center">
           <button
+            onClick={signInWithGoogle}
             type="submit"
             className="bg-amber-300 text-black hover:bg-amber-400 font-bold px-4 py-3 w-[300px] rounded-lg mt-2"
           >
