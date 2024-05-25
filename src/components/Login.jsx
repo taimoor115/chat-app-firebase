@@ -1,22 +1,16 @@
 import Input from "./Input";
-import app from "../firebase";
 import { Link, useNavigate } from "react-router-dom";
 import {
-  getAuth,
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
 } from "firebase/auth";
-import { notify } from "./Notify";
 import { useState } from "react";
+import { auth } from "../firebase";
 
-import Cookies from "universal-cookie";
-
-const auth = getAuth(app);
 const provider = new GoogleAuthProvider(auth);
 
 const Login = () => {
-  const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -24,8 +18,9 @@ const Login = () => {
 
   const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
-    console.log(result);
-    navigate("/home");
+    if (result.user) {
+      navigate("/home");
+    }
   };
 
   const login = async (e) => {
