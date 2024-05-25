@@ -4,6 +4,7 @@ import Chat from "./Chat";
 import { useNavigate } from "react-router-dom";
 import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
+import GoBack from "./GoBack";
 
 const Home = () => {
   const [room, setRoom] = useState("");
@@ -19,12 +20,13 @@ const Home = () => {
     });
   };
   console.log(name);
-  return (
-    <>
+
+  const isAuthenticated = auth.currentUser !== null;
+
+  return isAuthenticated ? (
+    <div>
       {room ? (
-        <div>
-          <Chat room={room} name={name} />
-        </div>
+        <Chat room={room} name={name} />
       ) : (
         <>
           <div className="flex p-2 justify-between">
@@ -73,7 +75,9 @@ const Home = () => {
           </form>
         </>
       )}
-    </>
+    </div>
+  ) : (
+    <GoBack />
   );
 };
 

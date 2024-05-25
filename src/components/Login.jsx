@@ -17,10 +17,9 @@ const Login = () => {
   const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
-    const result = await signInWithPopup(auth, provider);
-    if (result.user) {
-      navigate("/home");
-    }
+    await signInWithPopup(auth, provider);
+
+    navigate("/home");
   };
 
   const login = async (e) => {
@@ -33,7 +32,7 @@ const Login = () => {
 
   return (
     <div className="flex justify-center mt-10">
-      <div className="container h-[500px] w-[350px] md:w-[500px] lg:w-[500px] bg-red-300 text-white rounded-2xl">
+      <div className="container h-[550px] w-[350px] md:w-[500px] lg:w-[500px] bg-black text-white rounded-2xl">
         <div className="font-bold text-4xl mt-8 p-3 text-white text-center">
           Login
         </div>
@@ -55,7 +54,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
             <button
-              className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
+              className="bg-gray-600 text-white m hover:bg-gray-800 font-bold px-4 py-3 w-[250px] rounded-lg mt-4"
               type="submit"
             >
               Log in
@@ -65,7 +64,7 @@ const Login = () => {
         <div className="flex flex-col items-center mt-5 ">
           <Link to="/signup">
             <button
-              className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
+              className="bg-gray-600 text-white hover:bg-gray-800 font-bold px-4 py-3 w-[250px] rounded-lg mt-4"
               type="submit"
             >
               Register
@@ -73,14 +72,14 @@ const Login = () => {
           </Link>
         </div>
 
-        <div className="text-center text-white font-bold mt-2">
+        <div className="text-center text-white font-bold mt-5">
           Or log in with
         </div>
         <div className="flex justify-center">
           <button
             onClick={signInWithGoogle}
             type="submit"
-            className="bg-amber-300 text-black hover:bg-amber-400 font-bold px-4 py-3 w-[300px] rounded-lg mt-2"
+            className="bg-amber-300 text-black hover:bg-amber-400 font-bold px-4 py-3 w-[250px] rounded-lg mt-5"
           >
             Log in with Google
           </button>

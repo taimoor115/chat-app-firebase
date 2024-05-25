@@ -4,7 +4,7 @@ import app from "../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useState } from "react";
 import Notify, { notify } from "./Notify";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 const auth = getAuth(app);
 const Signup = () => {
@@ -27,7 +27,7 @@ const Signup = () => {
 
   return (
     <div className="flex justify-center mt-10">
-      <div className="container h-[500px] w-[350px] md:w-[500px] lg:w-[500px] bg-red-300 text-white rounded-2xl">
+      <div className="container h-[500px] w-[350px] md:w-[500px] lg:w-[500px] bg-black text-white rounded-2xl">
         <div className="font-bold text-4xl mt-4 p-3 text-white">Welcome!</div>
 
         <form
@@ -49,11 +49,19 @@ const Signup = () => {
           <Notify />
 
           <button
-            className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
+            className="bg-gray-600 text-white hover:bg-gray-800 font-bold px-4 py-3 w-[250px] rounded-lg mt-4"
             type="submit"
           >
             Register
           </button>
+          <Link to="/">
+            <button
+              className="bg-gray-600 text-white hover:bg-gray-800 font-bold px-4 py-3 w-[250px] rounded-lg mt-4"
+              type="submit"
+            >
+              Login
+            </button>
+          </Link>
         </form>
       </div>
     </div>
