@@ -1,5 +1,6 @@
 import React from "react";
 import { useRef, useState } from "react";
+import Chat from "./Chat";
 
 const Home = () => {
   const [room, setRoom] = useState("");
@@ -7,13 +8,20 @@ const Home = () => {
   return (
     <>
       {room ? (
-        <div>Chat</div>
+        <div>
+          <Chat room={room} />
+        </div>
       ) : (
         <>
           <h1 className="font-bold text-3xl p-4 text-center">
             Chat Application
           </h1>
-          <form className="flex flex-col  w-full h-[200px] gap-3 items-center justify-center">
+          <form
+            onSubmit={(e) => {
+              e.preventDefault();
+            }}
+            className="flex flex-col  w-full h-[200px] gap-3 items-center justify-center"
+          >
             <label htmlFor="room" className="font-bold">
               Enter Room ID:
             </label>

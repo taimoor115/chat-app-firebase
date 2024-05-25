@@ -19,13 +19,11 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate();
 
-  const cookie = new Cookies();
+  const navigate = useNavigate();
 
   const signInWithGoogle = async () => {
     const result = await signInWithPopup(auth, provider);
-    cookie.set("auth-token", result.user.refreshToken);
     console.log(result);
     navigate("/home");
   };
@@ -35,7 +33,6 @@ const Login = () => {
 
     const result = await signInWithEmailAndPassword(auth, email, password);
     console.log(result);
-    cookie.set("auth-token", result.user.refreshToken);
     navigate("/home");
   };
 
