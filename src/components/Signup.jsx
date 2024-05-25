@@ -1,26 +1,27 @@
 import Input from "./Input";
 import app from "../firebase";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import Notify, { notify } from "./Notify";
 
 const auth = getAuth(app);
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const notify = () => toast("Account have created");
-
   const createUser = async (e) => {
     e.preventDefault();
-    await createUserWithEmailAndPassword(auth, email, password).finally(() => {
-      notify();
-      setName("");
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      notify("User Created");
       setEmail("");
+      setName("");
       setPassword("");
       e.target.reset();
-    });
+    } catch (error) {
+      error && notify(error.message);
+    }
   };
 
   return (
@@ -51,19 +52,7 @@ const Signup = () => {
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
           />
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            rtl={false}
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="dark"
-          />
-
+          <Notify />
           <button
             className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
             type="submit"
