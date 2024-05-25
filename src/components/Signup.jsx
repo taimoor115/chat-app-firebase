@@ -4,21 +4,23 @@ import app from "../firebase";
 import { createUserWithEmailAndPassword, getAuth } from "firebase/auth";
 import { useState } from "react";
 import Notify, { notify } from "./Notify";
+import { Link, useNavigate } from "react-router-dom";
 
 const auth = getAuth(app);
 const Signup = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const createUser = async (e) => {
     e.preventDefault();
     try {
       await createUserWithEmailAndPassword(auth, email, password);
-      notify("User Created");
       setEmail("");
       setName("");
       setPassword("");
       e.target.reset();
+      navigate("/");
     } catch (error) {
       error && notify(error.message);
     }
@@ -34,13 +36,6 @@ const Signup = () => {
           className="flex flex-col gap-4 items-center mt-4"
         >
           <Input
-            type="text"
-            placeholder="Name"
-            className="p-3 rounded-lg w-3/4 text-black"
-            onChange={(e) => setName(e.target.value)}
-          />
-
-          <Input
             type="email"
             className="p-3 rounded-lg w-3/4   text-black"
             placeholder="Email"
@@ -53,6 +48,7 @@ const Signup = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <Notify />
+
           <button
             className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
             type="submit"

@@ -1,5 +1,6 @@
 import Input from "./Input";
 import app from "../firebase";
+import { Link, useNavigate } from "react-router-dom";
 import {
   getAuth,
   signInWithPopup,
@@ -9,6 +10,8 @@ import {
 import { notify } from "./Notify";
 import { useState } from "react";
 
+import Cookies from "universal-cookie";
+
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider(auth);
 
@@ -16,33 +19,24 @@ const Login = () => {
   const [user, setUser] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  const signInWithGoogle = () => {
-    signInWithPopup(auth, provider)
-      .then((user) => {
-        setUser(user);
-        notify("Log in Successfull");
-      })
-      .catch((error) => {
-        error && notify(error.message);
-      });
+  const cookie = new Cookies();
+
+  const signInWithGoogle = async () => {
+    const result = await signInWithPopup(auth, provider);
+    cookie.set("auth-token", result.user.refreshToken);
+    console.log(result);
+    navigate("/home");
   };
 
   const login = async (e) => {
     e.preventDefault();
 
-    signInWithEmailAndPassword(auth, email, password)
-      .then((user) => {
-        console.log(user);
-        setUser(user);
-        setEmail("");
-        setPassword("");
-        e.target.reset();
-      })
-      .catch((error) => {
-        error && notify(error.message);
-      })
-      .finally(() => notify("Login Successfully"));
+    const result = await signInWithEmailAndPassword(auth, email, password);
+    console.log(result);
+    cookie.set("auth-token", result.user.refreshToken);
+    navigate("/home");
   };
 
   return (
@@ -77,13 +71,14 @@ const Login = () => {
           </form>
         </div>
         <div className="flex flex-col items-center mt-5 ">
-          <button
-            onClick={<Login />}
-            className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
-            type="submit"
-          >
-            Register
-          </button>
+          <Link to="/signup">
+            <button
+              className="bg-red-400 text-white m hover:bg-red-500 font-bold px-4 py-3 w-[300px] rounded-lg mt-4"
+              type="submit"
+            >
+              Register
+            </button>
+          </Link>
         </div>
 
         <div className="text-center text-white font-bold mt-2">
