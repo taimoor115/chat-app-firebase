@@ -50,7 +50,6 @@ const Chat = ({ room, name }) => {
   const loggedOut = () => {
     signOut(auth).then(() => {
       navigate("/");
-      console.log("logged out");
     });
   };
   return (

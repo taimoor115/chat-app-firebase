@@ -4,12 +4,13 @@ import Chat from "./Chat";
 import { useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
+import Notify, { notify } from "./Notify";
 
 const Home = () => {
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
   const ref = useRef(null);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const nameRef = useRef(null);
 
@@ -22,17 +23,16 @@ const Home = () => {
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       if (user) {
-        setLoading(false);
+        setLoading(true);
       } else {
-        navigate("/");
+        navigate("/back");
       }
     });
-
     return () => unsubscribe();
   }, [navigate]);
 
-  if (loading) {
-    return <p>Loading......</p>;
+  if (!loading) {
+    return <p>Loading....</p>;
   }
 
   return (

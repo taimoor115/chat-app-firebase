@@ -7,6 +7,7 @@ import {
 } from "firebase/auth";
 import { useState } from "react";
 import { auth } from "../firebase";
+import Notify, { notify } from "./Notify";
 
 const provider = new GoogleAuthProvider(auth);
 
@@ -18,20 +19,22 @@ const Login = () => {
 
   const signInWithGoogle = async () => {
     await signInWithPopup(auth, provider);
-
     navigate("/home");
   };
 
   const login = async (e) => {
     e.preventDefault();
-
-    const result = await signInWithEmailAndPassword(auth, email, password);
-    console.log(result);
-    navigate("/home");
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      navigate("/home");
+    } catch (error) {
+      notify(error && error.message);
+    }
   };
 
   return (
     <div className="flex justify-center mt-10">
+      <Notify />
       <div className="container h-[550px] w-[350px] md:w-[500px] lg:w-[500px] bg-black text-white rounded-2xl">
         <div className="font-bold text-4xl mt-8 p-3 text-white text-center">
           Login

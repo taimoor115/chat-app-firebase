@@ -7,7 +7,8 @@ import GoBack from "./components/GoBack";
 const router = createBrowserRouter([
   { path: "/", element: <Login /> },
   { path: "/signup", element: <Signup /> },
-  { path: "/home", element: <Home />, errorElement: <GoBack /> },
+  { path: "/home", element: <Home /> },
+  { path: "/back", element: <GoBack /> },
 ]);
 
 export default router;
