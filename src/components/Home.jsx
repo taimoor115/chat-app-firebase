@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useRef, useState } from "react";
 import Chat from "./Chat";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +9,7 @@ const Home = () => {
   const [room, setRoom] = useState("");
   const [name, setName] = useState("");
   const ref = useRef(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const nameRef = useRef(null);
 
@@ -17,6 +18,22 @@ const Home = () => {
       navigate("/");
     });
   };
+
+  useEffect(() => {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
+        setLoading(false);
+      } else {
+        navigate("/");
+      }
+    });
+
+    return () => unsubscribe();
+  }, [navigate]);
+
+  if (loading) {
+    return <p>Loading......</p>;
+  }
 
   return (
     <div>
@@ -28,7 +45,6 @@ const Home = () => {
             <h1 className="font-bold text-3xl p-4 text-center">
               Chat Application
             </h1>
-            <p>You logged in with {auth.currentUser.email}</p>
             <button
               onClick={loggedOut}
               className="bg-zinc-950 w-20 rounded-md hover:bg-black text-white"
@@ -68,6 +84,7 @@ const Home = () => {
             >
               Submit
             </button>
+            <p>You logged in with {auth.currentUser.email}</p>
           </form>
         </>
       )}
