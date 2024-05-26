@@ -2,9 +2,8 @@ import React from "react";
 import { useRef, useState } from "react";
 import Chat from "./Chat";
 import { useNavigate } from "react-router-dom";
-import { auth } from "../firebase";
 import { signOut } from "firebase/auth";
-import GoBack from "./GoBack";
+import { auth } from "../firebase";
 
 const Home = () => {
   const [room, setRoom] = useState("");
@@ -16,26 +15,23 @@ const Home = () => {
   const loggedOut = () => {
     signOut(auth).then(() => {
       navigate("/");
-      console.log("logged out");
     });
   };
-  console.log(name);
 
-  const isAuthenticated = auth.currentUser !== null;
-
-  return isAuthenticated ? (
+  return (
     <div>
       {room ? (
         <Chat room={room} name={name} />
       ) : (
         <>
-          <div className="flex p-2 justify-between">
+          <div className="flex p-2 justify-evenly">
             <h1 className="font-bold text-3xl p-4 text-center">
               Chat Application
             </h1>
+            <p>You logged in with {auth.currentUser.email}</p>
             <button
               onClick={loggedOut}
-              className="bg-zinc-950 p-3 rounded-md hover:bg-black text-white"
+              className="bg-zinc-950 w-20 rounded-md hover:bg-black text-white"
             >
               Sign Out
             </button>
@@ -76,8 +72,6 @@ const Home = () => {
         </>
       )}
     </div>
-  ) : (
-    <GoBack />
   );
 };
 

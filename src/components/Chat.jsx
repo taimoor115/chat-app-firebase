@@ -54,7 +54,7 @@ const Chat = ({ room, name }) => {
     });
   };
   return (
-    <div className="mt-2 h-[600px] m-auto w-[700px] flex flex-col rounded-lg items-center border-2 border-black">
+    <div className="mt-4 lg:h-[600px] h-full w-[500px] m-auto lg:w-[700px] flex flex-col rounded-lg items-center border-2 border-black">
       <div className="flex w-full justify-around bg-black">
         <p className="text-center p-4 font-bold text-4xl text-white">
           Welcome to {room}
@@ -68,7 +68,7 @@ const Chat = ({ room, name }) => {
       </div>
       <div className="h-[530px] w-full p-2 overflow-y-scroll overflow-x-hidden">
         {messages.map((message) => (
-          <div>
+          <div key={message.id}>
             <span className="font-bold">{message.user}</span>
             <span className="overflow-x-scroll">{`: ${message.text}`}</span>
           </div>
@@ -78,7 +78,7 @@ const Chat = ({ room, name }) => {
       <form onSubmit={handleSubmit} className="flex items-end bg-black w-full">
         <input
           type="text"
-          className="p-2 w-full h-full rounded-b-lg border bg-white text-black outline-none"
+          className="p-2 h-14 w-96 lg:w-full lg:h-full md:w-full md:h-full rounded-b-lg border bg-white text-black outline-none"
           placeholder="Type Message"
           required
           value={message}
